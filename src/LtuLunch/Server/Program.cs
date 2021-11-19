@@ -1,4 +1,6 @@
+using LtuLunch.Server.data;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<LunchDbContext>(options =>
+{
+    options.UseInMemoryDatabase("testing-db");
+});
 
 var app = builder.Build();
 

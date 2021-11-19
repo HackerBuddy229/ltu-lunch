@@ -14,4 +14,5 @@ public class Lunch
     public DateTime When { get; set; }
 
     public IList<string> Tags { get; set; } = new List<string>();
+    public float Price { get; set; }
 }
