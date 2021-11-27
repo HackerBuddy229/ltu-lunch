@@ -14,7 +14,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<LunchDbContext>(options =>
 {
-    options.UseInMemoryDatabase("testing-db");
+    options.UseNpgsql(@"Host=localhost:49153;Username=postgres;Password=test123;Database=ltulunch");
+    //options.UseInMemoryDatabase("testing-db");
 });
 
 var app = builder.Build();
