@@ -3,11 +3,18 @@
 <PageTitle>Lunch on Ltu</PageTitle>
 
 <MudContainer>
-    
+    <MudGrid>
+        @foreach (var lunch in CurrentLunchEpoch)
+        {
+            <MudItem xs="4">
+                <LunchItem Lunch="lunch" />
+            </MudItem>
+        }
+    </MudGrid>
 </MudContainer>
 
 
 @code
 {
-    
+    public IList<Lunch> CurrentLunchEpoch = new List<Lunch>();
 }
