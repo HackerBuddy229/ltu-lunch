@@ -1,6 +1,6 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-namespace LtuLunch.Shared.Models;
 
 public class Lunch
 {

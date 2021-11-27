@@ -1,4 +1,4 @@
-namespace LtuLunch.Shared.Models;
+using System;
 
 public class OpeningHours
 {
