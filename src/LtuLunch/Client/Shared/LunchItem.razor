@@ -1,5 +1,26 @@
-<h3>LunchItem</h3>
+<MudContainer>
+    <MudContainer> <!-- restaurant and lunch title-->
+        <MudText Typo="Typo.h5">@Lunch.Resturant.Name</MudText>
+        <MudText Typo="Typo.h5">@Lunch.Title</MudText>
+    </MudContainer>
+    
+    <MudDivider DividerType="DividerType.Inset"/>
+    
+    <MudContainer> <!-- Description tags and price -->
+        <MudText>@Lunch.Description</MudText>
+        <MudContainer> <!-- tags -->
+            @foreach (var tag in Lunch.Tags)
+            {
+                <MudChip>@tag</MudChip>
+            }
+        </MudContainer>
+        <MudText>@Lunch.Price kr</MudText>
+    </MudContainer>
+</MudContainer>
 
 @code {
-    
+
+    [Parameter]
+    public Lunch Lunch { get; set; } = new Lunch();
+
 }

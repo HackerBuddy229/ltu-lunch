@@ -1,14 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-@code {
-    private void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
-
-    private bool _drawerOpen = true;
-}
-
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
@@ -27,3 +18,13 @@
         @Body
     </MudMainContent>
 </MudLayout>
+
+
+@code {
+    private void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private bool _drawerOpen = false;
+}

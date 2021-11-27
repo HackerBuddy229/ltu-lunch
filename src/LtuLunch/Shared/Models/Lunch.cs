@@ -9,7 +9,7 @@ public class Lunch
     
     public string Title { get; set; }
     public string Description { get; set; }
-    public string Resturant { get; init; }
+    public Resturant Resturant { get; init; }
     
     public DateTime When { get; set; }
 
