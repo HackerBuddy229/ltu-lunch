@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LtuLunch.Server.Controllers
 {
     [ApiController]
+    [Route("/api/restaurant")]
     public class RestaurantController : Controller
     {
         private readonly LunchDbContext _lunchDbContext;
@@ -17,6 +18,7 @@ namespace LtuLunch.Server.Controllers
         }
     
         [HttpGet]
+        [Route("byId")]
         public async Task<IActionResult> GetRestaurantInfo([FromQuery] string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -32,6 +34,7 @@ namespace LtuLunch.Server.Controllers
         }
 
         [HttpGet]
+        [Route("")]
         public async Task<IActionResult> GetRestaurants()
         {
             var results = await _lunchDbContext.Resturants.ToListAsync(); //TODO: this will be your downfall.
@@ -40,6 +43,36 @@ namespace LtuLunch.Server.Controllers
 
             return BadRequest("No restaurant exist.");
         }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateRestaurants()
+        {
+            var rest = new[]
+            {
+                new Resturant
+                {
+                    Name = "Stuk",
+                    Description = "Kårhusresturangen i C-huset",
+                    OpensWhen = TimeOnly.FromTimeSpan(TimeSpan.FromHours(11)),
+                    OpenFor = TimeSpan.FromHours(4)
+                },
+                new Resturant
+                {
+                    Name = "Centrumresturangen",
+                    Description = "Centrumresturangen i B-huset",
+                    OpensWhen = TimeOnly.FromTimeSpan(TimeSpan.FromHours(11)),
+                    OpenFor = TimeSpan.FromHours(4)
+                }
+            };
+       
+
+            await _lunchDbContext.Resturants.AddRangeAsync(rest);
+            await _lunchDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+        }
     }
-}
+
 

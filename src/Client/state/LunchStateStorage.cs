@@ -25,8 +25,8 @@ public class LunchStateStorage
     public void SetLunchEpoch(DateTime epochStart, TimeSpan epochDuration)
     {
         CurrentLunchEpoch = LocalLunchCache
-            .Where(x => DateTime.Compare(x.When, epochStart) >= 0)
-            .Where(x => DateTime.Compare(x.When, DateTime.Now + epochDuration) < 0)
+            .Where(x => DateTime.Compare(x.When.ToDateTime(x.Resturant.OpensWhen), epochStart) >= 0)
+            .Where(x => DateTime.Compare(x.When.ToDateTime(x.Resturant.OpensWhen), DateTime.Now + epochDuration) < 0)
             .ToList();
     }
 

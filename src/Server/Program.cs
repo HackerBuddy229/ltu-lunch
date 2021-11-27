@@ -1,4 +1,5 @@
 using LtuLunch.Server.data;
+using LtuLunch.Server.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LunchDbContext>(options =>
 {
-    options.UseNpgsql(@"Host=localhost:49153;Username=postgres;Password=test123;Database=ltulunch");
+    //options.UseNpgsql();
     //options.UseInMemoryDatabase("testing-db");
 });
+
+builder.Services.AddSingleton<WeekService>();
 
 var app = builder.Build();
 
@@ -24,6 +28,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
