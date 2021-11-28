@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LtuLunch.Server.data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NodaTime;
 
 namespace LtuLunch.Server.Controllers
 {
@@ -54,15 +55,15 @@ namespace LtuLunch.Server.Controllers
                 {
                     Name = "Stuk",
                     Description = "Kårhusresturangen i C-huset",
-                    OpensWhen = TimeOnly.FromTimeSpan(TimeSpan.FromHours(11)),
-                    OpenFor = TimeSpan.FromHours(4)
+                    OpensWhen = LocalTime.FromHoursSinceMidnight(11),
+                    OpenFor = Period.FromHours(4)
                 },
                 new Resturant
                 {
                     Name = "Centrumresturangen",
                     Description = "Centrumresturangen i B-huset",
-                    OpensWhen = TimeOnly.FromTimeSpan(TimeSpan.FromHours(11)),
-                    OpenFor = TimeSpan.FromHours(4)
+                    OpensWhen = LocalTime.FromHoursSinceMidnight(11),
+                    OpenFor = Period.FromHours(4)
                 }
             };
        

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NodaTime;
 
 public class Resturant
 {
@@ -12,7 +13,7 @@ public class Resturant
 
     public IList<Lunch> Menu { get; set; }
     
-    public TimeOnly OpensWhen { get; set; }
-    public TimeSpan OpenFor { get; set; }
+    public LocalTime OpensWhen { get; set; }
+    public Period OpenFor { get; set; }
 }
 

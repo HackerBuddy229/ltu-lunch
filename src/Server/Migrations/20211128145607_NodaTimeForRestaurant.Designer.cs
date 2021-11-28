@@ -2,6 +2,7 @@
 using LtuLunch.Server.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LtuLunch.Server.Migrations
 {
     [DbContext(typeof(LunchDbContext))]
-    partial class LunchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211128145607_NodaTimeForRestaurant")]
+    partial class NodaTimeForRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
