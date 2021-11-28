@@ -1,10 +1,13 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LtuLunch.Server.data;
 using LtuLunch.Server.services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NodaTime;
+using NodaTime.Calendars;
 
 namespace LtuLunch.Server.Controllers
 {
@@ -28,7 +31,7 @@ namespace LtuLunch.Server.Controllers
             week = week == 0 ? _weekService.GetCurrentWeek() : week;
 
         var lunches = await _lunchDbContext.Lunches
-            .Where(x => _weekService.GetWeekByDateOnly(x.When) == week)
+            .Where(x =>  _weekService.GetWeekByLocalDate(x.When) == week)
             .ToListAsync();
 
             if (lunches.Any())
@@ -39,8 +42,9 @@ namespace LtuLunch.Server.Controllers
 
         [HttpGet]
         [Route("byDay")]
-        public async Task<IActionResult> GetLunchByDay([FromQuery] DateOnly day)
+        public async Task<IActionResult> GetLunchByDay([FromQuery] int year, int month, int date)
         {
+            var day = new LocalDate(year, month, date);
             var lunches = await _lunchDbContext.Lunches
                 .Where(x => x.When == day)
                 .ToListAsync();
@@ -70,7 +74,7 @@ namespace LtuLunch.Server.Controllers
                     Price = 85,
                     Resturant = centrum,
                     Tags = {"Dagens"},
-                    When = new DateOnly(2021, 11, 29)
+                    When = new LocalDate(2021, 11, 29)
                 },
                 new Lunch
                 {
@@ -79,7 +83,7 @@ namespace LtuLunch.Server.Controllers
                     Price = 85,
                     Resturant = centrum,
                     Tags = {"Fisk"},
-                    When = new DateOnly(2021, 11, 29)
+                    When = new LocalDate(2021, 11, 29)
                 },
                 new Lunch
                 {
@@ -88,7 +92,7 @@ namespace LtuLunch.Server.Controllers
                     Price = 85,
                     Resturant = centrum,
                     Tags = {"Veg"},
-                    When = new DateOnly(2021, 11, 29)
+                    When = new LocalDate(2021, 11, 29)
                 },
             };
             

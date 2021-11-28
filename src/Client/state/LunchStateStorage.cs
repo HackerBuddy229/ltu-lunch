@@ -1,4 +1,6 @@
 using LtuLunch.Client.services;
+using NodaTime;
+using NodaTime.Extensions;
 
 namespace LtuLunch.Client.state;
 
@@ -13,7 +15,7 @@ public class LunchStateStorage
         Task.Run(async () =>
         {
             await RefreshLunchCache();
-            SetLunchEpoch(DateTime.Now, DateTime.Now.AddDays(1)-DateTime.Now);
+            SetLunchEpoch(SystemClock.Instance.InUtc().GetCurrentDate(), Period.FromDays(1));
         });
     }
     
@@ -22,11 +24,11 @@ public class LunchStateStorage
     
     public List<Lunch> CurrentLunchEpoch { get; private set; }
 
-    public void SetLunchEpoch(DateTime epochStart, TimeSpan epochDuration)
+    public void SetLunchEpoch(LocalDate epochStart, Period epochDuration)
     {
         CurrentLunchEpoch = LocalLunchCache
-            .Where(x => DateTime.Compare(x.When.ToDateTime(x.Resturant.OpensWhen), epochStart) >= 0)
-            .Where(x => DateTime.Compare(x.When.ToDateTime(x.Resturant.OpensWhen), DateTime.Now + epochDuration) < 0)
+            .Where(x => x.When.CompareTo(epochStart) >= 0)
+            .Where(x => x.When.CompareTo(epochStart + epochDuration) < 0)
             .ToList();
     }
 

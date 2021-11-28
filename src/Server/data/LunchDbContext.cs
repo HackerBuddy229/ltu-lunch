@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.Internal.TypeHandlers.DateTimeHandlers;
+using Npgsql.PostgresTypes;
 
 namespace LtuLunch.Server.data
 {
@@ -25,13 +27,18 @@ namespace LtuLunch.Server.data
             modelBuilder.Entity<Lunch>()
                 .Property(nameof(Lunch.Tags))
                 .HasConversion(splitStringConverter);
+
+            modelBuilder.Entity<Lunch>()
+                .Property(nameof(Lunch.When))
+                .HasColumnType("date");
             
             base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost:49153;Username=postgres;Password=test123;Database=ltulunch");
+            optionsBuilder.UseNpgsql(@"Host=localhost:49153;Username=postgres;Password=test123;Database=ltulunch",
+                o => o.UseNodaTime());
             base.OnConfiguring(optionsBuilder);
         }
     }
