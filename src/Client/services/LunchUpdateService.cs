@@ -16,7 +16,7 @@ public class LunchUpdateService
 
         try
         {
-            var result = await _httpClient.GetAsync("..."); //TODO: fill in controller uri
+            var result = await _httpClient.GetAsync($"/api/lunch/byDay?year=2021&month=11&date=29"); //TODO: fill in controller uri
 
             if (!result.IsSuccessStatusCode)
                 return new List<Lunch>();

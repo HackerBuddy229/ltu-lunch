@@ -32,6 +32,21 @@ namespace LtuLunch.Server.Controllers
 
         var lunches = await _lunchDbContext.Lunches
             .Where(x =>  _weekService.GetWeekByLocalDate(x.When) == week)
+            .Select(x => new
+            {
+                x.Title,
+                x.Description,
+                x.Price,
+                x.Tags,
+                x.When,
+                Resturant = new
+                {
+                    x.Resturant.Name,
+                    x.Resturant.Description,
+                    x.Resturant.OpenFor,
+                    x.Resturant.OpensWhen
+                }
+            })
             .ToListAsync();
 
             if (lunches.Any())
@@ -47,6 +62,21 @@ namespace LtuLunch.Server.Controllers
             var day = new LocalDate(year, month, date);
             var lunches = await _lunchDbContext.Lunches
                 .Where(x => x.When == day)
+                .Select(x => new
+                {
+                    x.Title,
+                    x.Description,
+                    x.Price,
+                    x.Tags,
+                    x.When,
+                    Resturant = new
+                    {
+                        x.Resturant.Name,
+                        x.Resturant.Description,
+                        x.Resturant.OpenFor,
+                        x.Resturant.OpensWhen
+                    }
+                })
                 .ToListAsync();
 
             if (lunches.Any())

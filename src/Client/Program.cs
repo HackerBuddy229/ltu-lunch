@@ -17,8 +17,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddSingleton<LunchUpdateService>();
-builder.Services.AddSingleton<LunchStateStorage>();
+builder.Services.AddScoped<LunchUpdateService>();
+builder.Services.AddScoped<LunchStateStorage>();
 
 
 await builder.Build().RunAsync();

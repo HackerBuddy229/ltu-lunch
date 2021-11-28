@@ -1,13 +1,24 @@
 ﻿@page "/"
+@using LtuLunch.Client.state
+@inject LunchStateStorage _lunchStateStorage
 
 <PageTitle>Lunch on Ltu</PageTitle>
 
 <MudContainer>
     <MudGrid>
-        @foreach (var lunch in CurrentLunchEpoch)
+        @if (CurrentLunchEpoch.Any())
         {
-            <MudItem xs="4">
-                <LunchItem Lunch="lunch" />
+            @foreach (var lunch in CurrentLunchEpoch)
+            {
+                <MudItem xs="4">
+                    <LunchItem Lunch="lunch"/>
+                </MudItem>
+            }
+        }
+        else
+        {
+            <MudItem xs="6">
+                <!-- Loading -->
             </MudItem>
         }
     </MudGrid>
@@ -17,4 +28,12 @@
 @code
 {
     public IList<Lunch> CurrentLunchEpoch = new List<Lunch>();
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        CurrentLunchEpoch = _lunchStateStorage.CurrentLunchEpoch;
+        StateHasChanged();
+        
+        base.OnAfterRender(firstRender);
+    }
 }
